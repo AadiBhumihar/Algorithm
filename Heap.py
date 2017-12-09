@@ -5,7 +5,8 @@ Created on Tue Aug 22 20:25:41 2017
 
 @author: bhumihar
 """
-import BinaryTree ;
+
+import random
 
 class Heap :
     
@@ -13,6 +14,7 @@ class Heap :
         self.heap_list = [0]*size;
         self.size = size
         self.index = -1;
+        
     def get_data(self,index):
         if index<self.size :
             return self.heap_list[index]
@@ -37,100 +39,58 @@ class Heap :
            self.heap_list[self.index] = item;
            
        return self.heap_list;
+
+    def heap_size(self) :
+        return len(self.heap_list)
+
+   
      
-       
-binary_tree = BinaryTree.BinaryTree(31)
-binary_tree.insert_data(1)
-binary_tree.insert_data(21)
-binary_tree.insert_data(9)
-binary_tree.insert_data(10)
-binary_tree.insert_data(12)
-binary_tree.insert_data(18)
-binary_tree.insert_data(3)
-binary_tree.insert_data(2)
-binary_tree.insert_data(8)
-binary_tree.insert_data(7)
-root = binary_tree.get_root()
-result = binary_tree.levelorder_wr_transversal(root)
+def max_heapify(result,size):
+     
+    l_child = 2*size + 1;
+    r_child = 2*size + 2;
+    h_len = len(result) ;
+    largest = size ;
+    if (l_child < h_len and result[l_child]>result[size] ) :
+        largest = l_child ;
+    if(r_child < h_len and result[r_child]>result[largest]) :
+        largest = r_child ;
+        
+    if  (largest != size) :
+        result[largest] , result[size] = result[size] , result[largest]
+        max_heapify(result,largest)
+        
+    return result
+    
+        
+    return result;
+
+def build_max_heapify(result) :
+    
+    result_size = len(result) // 2
+    
+    for i in range(result_size,-1,-1):
+        max_heapify(result,i);
+        
+    return result
+    
+
+def heap_sort(result) :
+    val = [];
+    result_len = len(result)
+    result = build_max_heapify(result);
+    for i in range(result_len-1) :
+        val.insert(0,result.pop(0))
+        result = build_max_heapify(result);
+    return val   
 
 heap = Heap(11);
+result = [int(10*random.uniform(0,1)) for i in range(11) ]
 result = heap.insert_data(result)
 print(result)
 
-def max_heapify(result):
-    
-    print(len(result))
-    heap_size = len(result)//2;
-    print(heap_size)
-    for indx in range(heap_size) :
-        
-        max_v = result[indx]
-        max_indx = indx
-        
-        if (2*indx+1<heap_size) :
-            #print('okkk:',indx)
-            if (result[heap.get_left_child(indx)]>max_v) :
-                max_v = result[heap.get_left_child(indx)] ;
-                max_indx = heap.get_left_child(indx)
-            
-        if (2*indx+2<heap_size) :
-            #print('okkk:',indx)
-            if (result[heap.get_right_child(indx)]>max_v) :
-                max_v= result[heap.get_right_child(indx)]
-                max_indx = heap.get_right_child(indx) ;
-        #print(indx,max_indx)    
-        result[max_indx] = result[indx];
-        result[indx] = max_v
-        
-        
-    return result;
-  
-print(max_heapify(result))  
-
-def swap(x,y):
-    temp=x
-    x=y
-    y=temp
-    return x,y
-
-def heap_sort(result) :
-    result[0],result[-1] = swap(result[0],result[-1])
-    print(result)
-    result[:-1] =max_heapify(result[:-1])
-    print("result:",result)
-    result[0],result[-2] = swap(result[0],result[-2])
-    print(result)
-    result[:-2] =max_heapify(result[:-2])
-    
-    result[0],result[-3] = swap(result[0],result[-3])
-    print(result)
-    result[:-3] =max_heapify(result[:-3])
-
-    result[0],result[-4] = swap(result[0],result[-4])
-    print(result)
-    result[:-4] =max_heapify(result[:-4])
-
-    result[0],result[-5] = swap(result[0],result[-5])
-    print(result)
-    result[:-5] =max_heapify(result[:-5])
-
-    result[0],result[-6] = swap(result[0],result[-6])
-    print(result)
-    result[:-6] =max_heapify(result[:-6])
-
-    result[0],result[-7] = swap(result[0],result[-7])
-    print(result)
-    result[:-7] =max_heapify(result[:-7])
-    
-    result[0],result[-8] = swap(result[0],result[-8])
-    print(result)
-    result[:-8] =max_heapify(result[:-8])
-    
-    result[0],result[-9] = swap(result[0],result[-9])
-    print(result)
-    result[:-9] =max_heapify(result[:-9])
-
-    return result
+result = build_max_heapify(result);
+print(result)
 
 
-#print(heap_sort(result))  
+print(heap_sort(result))  

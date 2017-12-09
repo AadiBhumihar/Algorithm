@@ -64,7 +64,30 @@ def recursive_sol(str1,str2) :
      
 
  #### Dynamic optimal solution  ######
- 
+
+def dynamic_sol(str1,str2) :
+    
+    count_matrix = [];
+    dup = [] ;
+    str1_len = len(str1) ;
+    str2_len = len(str2) ;
+    
+    count_matrix = [[0 for x in range(str1_len+1)] for y in range(str2_len+1)]
+    
+    for ix in range(str2_len) :
+        for iy in range(str1_len) :
+            if (str1[iy] == str2[ix]) :
+                count_matrix[ix+1][iy+1] = count_matrix[ix][iy] +1
+            elif (str1[iy] != str2[ix] ):
+                count_matrix[ix+1][iy+1] = max_len(count_matrix[ix][iy+1],count_matrix[ix+1][iy])
+            dup.append(count_matrix[ix+1][iy+1])
+    
+    
+    max_v = max(dup)
+    return max_v ;
+    
+    
+    
  
      
 str3 = "ABCDGH" 
@@ -80,6 +103,8 @@ if result :
     print("".join([x for x in result ]))
 else :
     print('None')
-#print(result)
+print(result)
 
 print(recursive_sol(str4,str1))
+
+print(dynamic_sol(str1,str2))
