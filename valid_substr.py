@@ -37,5 +37,15 @@ def valid_sudstr(str1) :
     return str_list[-1]                
 
 
-str2 = 'abbzbba' ;
-print(valid_sudstr(str2))
+def optimal_sol(str1) :
+    
+    str2 = str1.replace('a').replace('z').split()
+    return str2   
+    
+    
+
+str1 = 'abbzbba' ;
+#print(valid_sudstr(str1))
+str2 = str1.replace('a',' ').replace('z',' ').split(' ')
+
+print(str2)
